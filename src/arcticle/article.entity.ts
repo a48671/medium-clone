@@ -1,4 +1,5 @@
-import { BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from '@app/user/dto/user.entity';
+import { BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'articles' })
 export class ArticleEntity {
@@ -29,8 +30,11 @@ export class ArticleEntity {
   }
 
   @Column('simple-array')
-  tags: Array<string>;
+  tagList: Array<string>;
 
   @Column({ default: 0 })
   favoritesCount: number;
+
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.articles)
+  author: UserEntity;
 }
